@@ -35,7 +35,8 @@ class EmojiFacade
     public function replaceEmojis(string $content, EmojiStorageDto $emojiStorageDto): string
     {
         preg_match_all('/:\S*:/', $content, $matches);
-        foreach ($matches[0] as $match) {
+        $emojis = array_unique($matches[0]);
+        foreach ($emojis as $match) {
             $emojiName = trim($match, ':');
             if ($emojiCode = $emojiStorageDto->getByName($emojiName)) {
                 $content = str_replace($match, "<:$emojiName:$emojiCode>", $content);
