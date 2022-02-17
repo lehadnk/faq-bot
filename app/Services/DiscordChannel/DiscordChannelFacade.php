@@ -15,10 +15,8 @@ class DiscordChannelFacade
             throw new NoChannelException();
         }
 
-        $channel->getMessageHistory(['cache' => false])->done(function(Collection $messages) {
-            foreach ($messages as $message) {
-                $message->delete();
-            }
+        $channel->getMessageHistory(['cache' => false])->done(function(Collection $messages) use ($channel) {
+            $channel->deleteMessages($messages);
         });
 
         return true;

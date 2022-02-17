@@ -31,8 +31,9 @@ class DiscordFacade
         $api = $this->getDiscordFactory()->getDiscordApi();
         $api->setOnReadyHandler(function(DiscordApi $discord) use ($revision) {
             $this->emojiFacade->loadEmojiList($discord->getDiscord(), function(EmojiStorageDto $emojiStorageDto) use ($discord, $revision) {
-//                $this->discordChannelFacade->emptyChannel($discord->getDiscord(), $revision->channel->discord_channel_id);
+                $this->discordChannelFacade->emptyChannel($discord->getDiscord(), $revision->channel->discord_channel_id);
                 $this->revisionPublisherFacade->render($discord->getDiscord(), $revision, $emojiStorageDto);
+                $discord->getDiscord()->close(false);
             });
         });
 
