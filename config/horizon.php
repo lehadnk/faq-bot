@@ -183,7 +183,8 @@ return [
                 'maxProcesses' => 10,
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
-                'queues' => ['default']
+                'queues' => ['default'],
+                'timeout' => 180,
             ],
         ],
 
@@ -192,6 +193,7 @@ return [
                 'minProcesses' => 1,
                 'maxProcesses' => 3,
                 'queues' => ['default'],
+                'timeout' => 180,
             ],
         ],
     ],
