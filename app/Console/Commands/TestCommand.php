@@ -3,13 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Revision;
-use App\Services\Discord\API\DiscordApi;
 use App\Services\Discord\DiscordFacade;
-use App\Services\Emoji\EmojiFacade;
-use App\Services\RevisionPublisher\RevisionPublisherFacade;
-use Discord\Discord;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class TestCommand extends Command
 {
@@ -18,16 +13,14 @@ class TestCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'test:bot';
-
-    private const MAX_CONNECTION_ATTEMPTS = 10;
+    protected $signature = 'publish-revision {revision}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Tests bot';
+    protected $description = 'Publishes revision';
 
     /**
      * Create a new command instance.
@@ -39,10 +32,10 @@ class TestCommand extends Command
         parent::__construct();
     }
 
-    public function handle(DiscordFacade $discordFacade, RevisionPublisherFacade $revisionPublisherFacade, EmojiFacade $emojiFacade)
+    public function handle(DiscordFacade $discordFacade)
     {
-        $revision = Revision::where('id', 8)->first();
-        Log::debug('Starting job handle');
+        $revision = $this->input->getArgument('revision');
+        $revision = Revision::where('id', $revision)->first();
         $discordFacade->postRevision($revision);
     }
 }

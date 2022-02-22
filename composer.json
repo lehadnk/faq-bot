@@ -6,25 +6,14 @@
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.75",
-        "laravel/horizon": "^5.8",
-        "laravel/nova": "^3.30",
-        "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5",
-        "league/flysystem-aws-s3-v3": "^1.0",
+        "laravel/framework": "^9.2",
+        "laravel/horizon": "^5.9",
+        "laravel/nova": "^3.31",
+        "laravel/sanctum": "^2.14",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "optimistdigital/nova-sortable": "^2.4",
         "saumini/ellipsis-textarea": "^1.0",
-        "team-reflex/discord-php": "^6.0"
-    },
-    "require-dev": {
-        "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10"
+        "team-reflex/discord-php": "^7.0"
     },
     "autoload": {
         "psr-4": {
