@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use ChrisWare\NovaBreadcrumbs\Traits\Breadcrumbs;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,6 +20,7 @@ class Question extends Model
 {
     use HasFactory;
     use SortableTrait;
+    use Breadcrumbs;
 
     public $sortable = [
         'order_column_name' => 'order',
