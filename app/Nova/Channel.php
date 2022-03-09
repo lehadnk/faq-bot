@@ -3,7 +3,10 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 
@@ -58,6 +61,10 @@ class Channel extends Resource
             Text::make('Channel Name', 'discord_channel_name')
                 ->sortable()
                 ->rules('required', 'max:255'),
+
+            BelongsTo::make('Last Published By', 'lastPublishedBy', User::class),
+
+            DateTime::make('Last Published At', 'last_published_at'),
 
             HasMany::make('Revisions', 'revisions', Revision::class)
         ];

@@ -3,11 +3,13 @@
 namespace App\Services\Discord;
 
 use App\Models\Revision;
+use App\Models\User;
 use App\Services\Discord\API\DiscordApi;
 use App\Services\DiscordChannel\DiscordChannelFacade;
 use App\Services\Emoji\Dto\EmojiStorageDto;
 use App\Services\Emoji\EmojiFacade;
 use App\Services\RevisionPublisher\RevisionPublisherFacade;
+use Carbon\Carbon;
 
 class DiscordFacade
 {
@@ -26,13 +28,18 @@ class DiscordFacade
         $this->emojiFacade = $emojiFacade;
     }
 
-    public function postRevision(Revision $revision)
+    public function postRevision(Revision $revision, User $publisher)
     {
         $api = $this->getDiscordFactory()->getDiscordApi();
-        $api->setOnReadyHandler(function(DiscordApi $discord) use ($revision) {
-            $this->emojiFacade->loadEmojiList($discord->getDiscord(), function(EmojiStorageDto $emojiStorageDto) use ($discord, $revision) {
+        $api->setOnReadyHandler(function(DiscordApi $discord) use ($revision, $publisher) {
+            $this->emojiFacade->loadEmojiList($discord->getDiscord(), function(EmojiStorageDto $emojiStorageDto) use ($discord, $revision, $publisher) {
                 $this->discordChannelFacade->emptyChannel($discord->getDiscord(), $revision->channel->discord_channel_id);
                 $this->revisionPublisherFacade->render($discord->getDiscord(), $revision, $emojiStorageDto);
+//
+                $revision->channel->last_published_by = $publisher->id;
+                $revision->channel->last_published_at = Carbon::now();
+                $revision->channel->save();
+
                 $discord->getDiscord()->close(false);
             });
         });

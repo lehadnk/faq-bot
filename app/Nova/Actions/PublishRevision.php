@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
@@ -28,7 +29,7 @@ class PublishRevision extends Action
         }
 
         foreach ($models as $model) {
-            dispatch(new PublishFaqRevision($model));
+            dispatch(new PublishFaqRevision($model, Auth::user()));
         }
     }
 
