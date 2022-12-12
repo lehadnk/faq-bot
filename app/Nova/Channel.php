@@ -62,7 +62,7 @@ class Channel extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            BelongsTo::make('Last Published By', 'lastPublishedBy', User::class),
+            BelongsTo::make('Last Published By', 'lastPublishedBy', User::class)->exceptOnForms(),
 
             DateTime::make('Last Published At', 'last_published_at'),
 
