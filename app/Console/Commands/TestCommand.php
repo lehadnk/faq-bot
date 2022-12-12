@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Revision;
+use App\Models\User;
 use App\Services\Discord\DiscordFacade;
 use Illuminate\Console\Command;
 
@@ -34,8 +35,10 @@ class TestCommand extends Command
 
     public function handle(DiscordFacade $discordFacade)
     {
+        $user = User::first();
+
         $revision = $this->input->getArgument('revision');
         $revision = Revision::where('id', $revision)->first();
-        $discordFacade->postRevision($revision);
+        $discordFacade->postRevision($revision, $user);
     }
 }
