@@ -7,8 +7,10 @@ use App\Services\Emoji\Dto\EmojiStorageDto;
 use App\Services\Emoji\EmojiFacade;
 use App\Services\Glossary\Business\GlossaryPostProcessor;
 use App\Services\Glossary\Business\MessageUrlBuilder;
+use Discord\Discord;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Embed\Embed;
 use Illuminate\Support\Facades\Storage;
 
 class QuestionPublisherFacade
@@ -21,6 +23,7 @@ class QuestionPublisherFacade
     }
 
     public function render(
+        Discord $discord,
         Channel $channel,
         Question $question,
         EmojiStorageDto $emojiStorageDto,
@@ -33,9 +36,17 @@ class QuestionPublisherFacade
 
         foreach ($question->messages()->orderBy('order')->get() as $message)
         {
+            /** @var \App\Models\Message $message */
             if ($message->content) {
                 $contents = $this->emojiFacade->replaceEmojis($message->content, $emojiStorageDto);
-                $channel->sendMessage($contents);
+
+                if ($message->render_as_embed) {
+                    $channel->sendEmbed(
+                        new Embed($discord, ['description' => $contents])
+                    );
+                } else {
+                    $channel->sendMessage($contents);
+                }
             }
             if ($message->image) {
                 $contents = Storage::disk('s3')->get($message->image);

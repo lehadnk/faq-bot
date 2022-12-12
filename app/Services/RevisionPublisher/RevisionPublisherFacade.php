@@ -29,7 +29,7 @@ class RevisionPublisherFacade
         $postProcessor = new GlossaryPostProcessor($discord, $channel, new MessageUrlBuilder(), $questions->count());
 
         foreach($questions as $question) {
-            $this->questionPublisherFacade->render($channel, $question, $emojiStorageDto, $postProcessor);
+            $this->questionPublisherFacade->render($discord, $channel, $question, $emojiStorageDto, $postProcessor);
         }
     }
 }

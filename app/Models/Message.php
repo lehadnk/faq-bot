@@ -12,6 +12,7 @@ use Spatie\EloquentSortable\SortableTrait;
  * @property int $question_id
  * @property string $content
  * @property string $image
+ * @property boolean $render_as_embed
  * @property int $order
  */
 class Message extends Model

@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
@@ -59,6 +60,8 @@ class Message extends Resource
 
             Image::make('Image')
                 ->disk('s3'),
+
+            Boolean::make('Render as Embed', 'render_as_embed')
         ];
     }
 
