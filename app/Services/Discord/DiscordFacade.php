@@ -34,11 +34,17 @@ class DiscordFacade
         $api->setOnReadyHandler(function(DiscordApi $discord) use ($revision, $publisher) {
             $this->emojiFacade->loadEmojiList($discord->getDiscord(), function(EmojiStorageDto $emojiStorageDto) use ($discord, $revision, $publisher) {
                 $this->discordChannelFacade->emptyChannel($discord->getDiscord(), $revision->channel->discord_channel_id);
+                sleep(5);
+
                 $this->revisionPublisherFacade->render($discord->getDiscord(), $revision, $emojiStorageDto);
-//
+
                 $revision->channel->last_published_by = $publisher->id;
                 $revision->channel->last_published_at = Carbon::now();
                 $revision->channel->save();
+
+                $revision->last_published_by = $publisher->id;
+                $revision->last_published_at = Carbon::now();
+                $revision->save();
 
                 $discord->getDiscord()->close(false);
             });

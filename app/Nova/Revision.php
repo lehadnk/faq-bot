@@ -48,7 +48,9 @@ class Revision extends Resource
         return [
             ID::make()->sortable(),
 
-            DateTime::make('Created At', 'created_at'),
+            BelongsTo::make('Last Published By', 'lastPublishedBy', User::class)->exceptOnForms(),
+
+            DateTime::make('Last Published At', 'last_published_at')->exceptOnForms(),
 
             HasMany::make('Questions', 'questions'),
 

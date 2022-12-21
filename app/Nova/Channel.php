@@ -64,7 +64,7 @@ class Channel extends Resource
 
             BelongsTo::make('Last Published By', 'lastPublishedBy', User::class)->exceptOnForms(),
 
-            DateTime::make('Last Published At', 'last_published_at'),
+            DateTime::make('Last Published At', 'last_published_at')->exceptOnForms(),
 
             HasMany::make('Revisions', 'revisions', Revision::class)
         ];
