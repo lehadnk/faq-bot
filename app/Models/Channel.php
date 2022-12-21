@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use ChrisWare\NovaBreadcrumbs\Traits\Breadcrumbs;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,7 +20,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Channel extends Model
 {
     use HasFactory;
-    use Breadcrumbs;
 
     protected $dates = ['last_published_at'];
 

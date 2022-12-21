@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use ChrisWare\NovaBreadcrumbs\Traits\Breadcrumbs;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 
 /**
@@ -16,11 +16,10 @@ use Spatie\EloquentSortable\SortableTrait;
  *
  * @property Message[] $messages
  */
-class Question extends Model
+class Question extends Model implements Sortable
 {
     use HasFactory;
     use SortableTrait;
-    use Breadcrumbs;
 
     public $sortable = [
         'order_column_name' => 'order',
@@ -31,5 +30,10 @@ class Question extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Revision::class, "revision_id");
     }
 }

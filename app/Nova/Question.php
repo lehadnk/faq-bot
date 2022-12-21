@@ -8,8 +8,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use OptimistDigital\NovaSortable\Traits\HasSortableRows;
-use Saumini\EllipsisTextarea\EllipsisTextarea;
+use Outl1ne\NovaSortable\Traits\HasSortableRows;
 
 class Question extends Resource
 {
@@ -53,8 +52,14 @@ class Question extends Resource
         return [
             ID::make()->sortable(),
 
-            EllipsisTextarea::make('Value', 'value')
+            Text::make('Value', 'value')
+                ->onlyOnIndex(),
+
+            Textarea::make('Value', 'value')
                 ->required(),
+
+            Text::make('Order', 'order')
+                ->onlyOnIndex(),
 
             HasMany::make('Messages', 'messages')
         ];

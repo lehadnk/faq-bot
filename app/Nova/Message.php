@@ -9,13 +9,9 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use OptimistDigital\NovaSortable\Traits\HasSortableRows;
-use Saumini\EllipsisTextarea\EllipsisTextarea;
 
 class Message extends Resource
 {
-    use HasSortableRows;
-
     public static $perPageViaRelationship = 50;
 
     /**
@@ -54,8 +50,10 @@ class Message extends Resource
         return [
             ID::make()->sortable(),
 
-            EllipsisTextarea::make('Content', 'content')
-                ->showOnIndex(true)
+            Text::make('Content', 'content')
+                ->onlyOnIndex(),
+
+            Textarea::make('Content', 'content')
                 ->required(),
 
             Image::make('Image')

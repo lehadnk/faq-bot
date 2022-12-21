@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use ChrisWare\NovaBreadcrumbs\Traits\Breadcrumbs;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\SortableTrait;
@@ -19,11 +18,15 @@ class Message extends Model
 {
     use HasFactory;
     use SortableTrait;
-    use Breadcrumbs;
 
     public $sortable = [
         'order_column_name' => 'order',
         'sort_when_creating' => true,
         'sort_on_has_many' => true,
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(Question::class, "question_id");
+    }
 }

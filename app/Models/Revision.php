@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use ChrisWare\NovaBreadcrumbs\Traits\Breadcrumbs;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Revision extends Model
 {
     use HasFactory;
-    use Breadcrumbs;
 
     public function questions(): HasMany
     {
@@ -27,5 +25,10 @@ class Revision extends Model
     public function channel(): BelongsTo
     {
         return $this->belongsTo(Channel::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Channel::class, "channel_id");
     }
 }
