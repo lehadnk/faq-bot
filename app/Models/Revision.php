@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -35,5 +36,10 @@ class Revision extends Model
     public function parent()
     {
         return $this->belongsTo(Channel::class, "channel_id");
+    }
+
+    public function lastPublishedBy(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'last_published_by');
     }
 }
