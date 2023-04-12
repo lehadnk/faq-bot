@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Services\Discord\DiscordFacade;
 use Illuminate\Console\Command;
 
-class TestCommand extends Command
+class PublishRevisionCommand extends Command
 {
     /**
      * The name and signature of the console command.

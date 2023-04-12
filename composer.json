@@ -6,15 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "laravel/framework": "^9.2",
-        "laravel/horizon": "^5.9",
-        "laravel/nova": "^4.19.5",
-        "laravel/sanctum": "^2.14",
-        "laravel/tinker": "^2.7",
-        "league/flysystem-aws-s3-v3": "^3.0",
+        "laravel/framework": "^9.52.5",
+        "laravel/horizon": "^5.15",
+        "laravel/nova": "^4.23.0",
+        "laravel/sanctum": "^2.15.1",
+        "laravel/tinker": "^2.8.1",
+        "league/flysystem-aws-s3-v3": "^3.13",
         "lehadnk/nova-breadcrumbs": "dev-main",
-        "outl1ne/nova-sortable": "^3.3",
-        "team-reflex/discord-php": "^7.0"
+        "outl1ne/nova-sortable": "^3.4",
+        "team-reflex/discord-php": "^7.3.4"
     },
     "autoload": {
         "psr-4": {

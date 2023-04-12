@@ -15,3 +15,4 @@ yarn-error.log
 /.vscode
 .html
 docker-compose.yml
+auth.json

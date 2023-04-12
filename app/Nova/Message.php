@@ -9,9 +9,12 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Outl1ne\NovaSortable\Traits\HasSortableRows;
 
 class Message extends Resource
 {
+    use HasSortableRows;
+
     public static $perPageViaRelationship = 50;
 
     /**
@@ -51,9 +54,13 @@ class Message extends Resource
             ID::make()->sortable(),
 
             Text::make('Content', 'content')
+                ->displayUsing(function($value) {
+                    return strlen($value) > 40 ? substr($value, 0, 40) . "..." : null;
+                })
                 ->onlyOnIndex(),
 
             Textarea::make('Content', 'content')
+                ->maxlength(2000)
                 ->required(),
 
             Image::make('Image')
