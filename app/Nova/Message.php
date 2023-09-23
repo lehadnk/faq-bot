@@ -55,7 +55,7 @@ class Message extends Resource
 
             Text::make('Content', 'content')
                 ->displayUsing(function($value) {
-                    return strlen($value) > 40 ? substr($value, 0, 40) . "..." : null;
+                    return mb_strlen($value) > 53 ? mb_substr($value, 0, 50) . "..." : null;
                 })
                 ->onlyOnIndex(),
 
