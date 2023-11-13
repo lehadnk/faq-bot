@@ -64,7 +64,7 @@ class Message extends Resource
                 ->required(),
 
             Image::make('Image')
-                ->disk('s3'),
+                ->disk('s3')->rules('file'),
 
             Boolean::make('Render as Embed', 'render_as_embed')
         ];
