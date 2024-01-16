@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -57,6 +58,9 @@ class Question extends Resource
 
             Textarea::make('Value', 'value')
                 ->required(),
+
+            Boolean::make('Display Title', 'display_title')
+                ->default(true),
 
             Text::make('Order', 'order')
                 ->onlyOnIndex(),

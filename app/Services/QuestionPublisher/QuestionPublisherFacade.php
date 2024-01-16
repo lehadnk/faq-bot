@@ -12,10 +12,12 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Illuminate\Support\Facades\Storage;
+use React\Promise\ExtendedPromiseInterface;
 
 class QuestionPublisherFacade
 {
     private EmojiFacade $emojiFacade;
+    private $questionGlossaryAnchorWasSent = false;
 
     public function __construct(EmojiFacade $emojiFacade, MessageUrlBuilder $messageUrlBuilder)
     {
@@ -29,10 +31,12 @@ class QuestionPublisherFacade
         EmojiStorageDto $emojiStorageDto,
         GlossaryPostProcessor $glossaryPostProcessor
     ) {
-        $questionHeaderMessagePromise = $channel->sendMessage("**$question->value**");
-        $questionHeaderMessagePromise->then(function(Message $msg) use ($question, $glossaryPostProcessor) {
-            $glossaryPostProcessor->onMessageProcessed($msg, $question);
-        });
+        $this->questionGlossaryAnchorWasSent = false;
+
+        if ($question->display_title) {
+            $promise = $channel->sendMessage("**$question->value**");
+            $this->addMessageUrlToGlossaryPromise($promise, $question, $glossaryPostProcessor);
+        }
 
         foreach ($question->messages()->orderBy('order')->get() as $message)
         {
@@ -41,19 +45,35 @@ class QuestionPublisherFacade
                 $contents = $this->emojiFacade->replaceEmojis($message->content, $emojiStorageDto);
 
                 if ($message->render_as_embed) {
-                    $channel->sendEmbed(
+                    $promise = $channel->sendEmbed(
                         new Embed($discord, ['description' => $contents])
                     );
+                    $this->addMessageUrlToGlossaryPromise($promise, $question, $glossaryPostProcessor);
                 } else {
-                    $channel->sendMessage($contents);
+                    $promise = $channel->sendMessage($contents);
+                    $this->addMessageUrlToGlossaryPromise($promise, $question, $glossaryPostProcessor);
                 }
             }
             if ($message->image) {
                 $contents = Storage::disk('s3')->get($message->image);
                 file_put_contents("/tmp/{$message->image}", $contents);
-                $channel->sendFile("/tmp/{$message->image}");
+                $promise = $channel->sendFile("/tmp/{$message->image}");
+                $this->addMessageUrlToGlossaryPromise($promise, $question, $glossaryPostProcessor);
             }
         }
         $channel->sendMessage("__".PHP_EOL."__");
+    }
+
+    private function addMessageUrlToGlossaryPromise(ExtendedPromiseInterface $promise, Question $question, GlossaryPostProcessor $glossaryPostProcessor)
+    {
+        if ($this->questionGlossaryAnchorWasSent) {
+            return;
+        }
+
+        $promise->then(function(Message $msg) use ($question, $glossaryPostProcessor) {
+            $glossaryPostProcessor->onMessageProcessed($msg, $question);
+        });
+
+        $this->questionGlossaryAnchorWasSent = true;
     }
 }

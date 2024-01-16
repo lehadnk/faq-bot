@@ -13,6 +13,7 @@ use Spatie\EloquentSortable\SortableTrait;
  * @property int $revision_id
  * @property string $value
  * @property int $order
+ * @property bool $display_title
  *
  * @property Message[] $messages
  */
