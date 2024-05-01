@@ -30,6 +30,7 @@ class DiscordFacade
 
     public function postRevision(Revision $revision, User $publisher)
     {
+        ini_set('memory_limit', '-1');
         $api = $this->getDiscordFactory()->getDiscordApi();
         $api->setOnReadyHandler(function(DiscordApi $discord) use ($revision, $publisher) {
             $this->emojiFacade->loadEmojiList($discord->getDiscord(), function(EmojiStorageDto $emojiStorageDto) use ($discord, $revision, $publisher) {
