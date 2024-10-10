@@ -1,3 +1,5 @@
+version: '3.7'
+
 services:
   faq-bot-php:
     container_name: faq-bot-app
