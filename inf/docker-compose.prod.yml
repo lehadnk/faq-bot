@@ -5,6 +5,7 @@ services:
     container_name: faq-bot-app
     build:
       dockerfile: inf/php.Dockerfile
+      context: .
     volumes:
       - .:/var/www
     networks:
@@ -14,6 +15,7 @@ services:
     container_name: faq-bot-horizon
     build:
       dockerfile: inf/horizon.Dockerfile
+      context: .
     volumes:
       - .:/var/www
     entrypoint: php artisan horizon
