@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\PublishFaqRevision;
 use App\Models\Revision;
 use App\Models\User;
-use App\Services\Discord\DiscordFacade;
+use App\Services\Discord\DiscordService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Auth;
 
 class PublishRevisionCommand extends Command
 {
@@ -33,12 +35,13 @@ class PublishRevisionCommand extends Command
         parent::__construct();
     }
 
-    public function handle(DiscordFacade $discordFacade)
+    public function handle(DiscordService $discordFacade)
     {
         $user = User::first();
 
         $revision = $this->input->getArgument('revision');
         $revision = Revision::where('id', $revision)->first();
+
         $discordFacade->postRevision($revision, $user);
     }
 }

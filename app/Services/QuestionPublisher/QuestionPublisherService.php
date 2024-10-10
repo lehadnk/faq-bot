@@ -4,7 +4,7 @@ namespace App\Services\QuestionPublisher;
 
 use App\Models\Question;
 use App\Services\Emoji\Dto\EmojiStorageDto;
-use App\Services\Emoji\EmojiFacade;
+use App\Services\Emoji\EmojiService;
 use App\Services\Glossary\Business\GlossaryPostProcessor;
 use App\Services\Glossary\Business\MessageUrlBuilder;
 use Discord\Discord;
@@ -14,12 +14,12 @@ use Discord\Parts\Embed\Embed;
 use Illuminate\Support\Facades\Storage;
 use React\Promise\ExtendedPromiseInterface;
 
-class QuestionPublisherFacade
+class QuestionPublisherService
 {
-    private EmojiFacade $emojiFacade;
+    private EmojiService $emojiFacade;
     private $questionGlossaryAnchorWasSent = false;
 
-    public function __construct(EmojiFacade $emojiFacade, MessageUrlBuilder $messageUrlBuilder)
+    public function __construct(EmojiService $emojiFacade, MessageUrlBuilder $messageUrlBuilder)
     {
         $this->emojiFacade = $emojiFacade;
     }

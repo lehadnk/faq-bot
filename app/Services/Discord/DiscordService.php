@@ -5,22 +5,22 @@ namespace App\Services\Discord;
 use App\Models\Revision;
 use App\Models\User;
 use App\Services\Discord\API\DiscordApi;
-use App\Services\DiscordChannel\DiscordChannelFacade;
+use App\Services\DiscordChannel\DiscordChannelService;
 use App\Services\Emoji\Dto\EmojiStorageDto;
-use App\Services\Emoji\EmojiFacade;
-use App\Services\RevisionPublisher\RevisionPublisherFacade;
+use App\Services\Emoji\EmojiService;
+use App\Services\RevisionPublisher\RevisionPublisherService;
 use Carbon\Carbon;
 
-class DiscordFacade
+class DiscordService
 {
-    private DiscordChannelFacade $discordChannelFacade;
-    private RevisionPublisherFacade $revisionPublisherFacade;
-    private EmojiFacade $emojiFacade;
+    private DiscordChannelService $discordChannelFacade;
+    private RevisionPublisherService $revisionPublisherFacade;
+    private EmojiService $emojiFacade;
 
     public function __construct(
-        DiscordChannelFacade $discordChannelFacade,
-        RevisionPublisherFacade $revisionPublisherFacade,
-        EmojiFacade $emojiFacade
+        DiscordChannelService    $discordChannelFacade,
+        RevisionPublisherService $revisionPublisherFacade,
+        EmojiService             $emojiFacade
     )
     {
         $this->discordChannelFacade = $discordChannelFacade;

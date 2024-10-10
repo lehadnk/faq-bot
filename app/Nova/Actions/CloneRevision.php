@@ -2,7 +2,7 @@
 
 namespace App\Nova\Actions;
 
-use App\Services\CloneRevision\CloneRevisionFacade;
+use App\Services\CloneRevision\CloneRevisionService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -25,7 +25,7 @@ class CloneRevision extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $model) {
-            $facade = new CloneRevisionFacade();
+            $facade = new CloneRevisionService();
             $facade->cloneRevision($model);
         }
     }

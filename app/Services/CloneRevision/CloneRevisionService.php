@@ -7,7 +7,7 @@ use App\Models\Question;
 use App\Models\Revision;
 use Illuminate\Database\Eloquent\Model;
 
-class CloneRevisionFacade
+class CloneRevisionService
 {
     public function cloneRevision(Revision $oldRevision)
     {

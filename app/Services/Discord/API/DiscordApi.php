@@ -30,6 +30,11 @@ class DiscordApi
         $this->discord->run();
     }
 
+    public function close()
+    {
+        $this->discord->close();
+    }
+
     public function getDiscord(): Discord
     {
         return $this->discord;

@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Revision;
 use App\Models\User;
-use App\Services\Discord\DiscordFacade;
+use App\Services\Discord\DiscordService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -36,7 +36,7 @@ class PublishFaqRevision implements ShouldQueue
      *
      * @return void
      */
-    public function handle(DiscordFacade $discordFacade)
+    public function handle(DiscordService $discordFacade)
     {
         $discordFacade->postRevision($this->revision, $this->publisher);
     }

@@ -1,0 +1,46 @@
+services:
+  faq-bot-php:
+    container_name: faq-bot-app
+    build:
+      dockerfile: inf/php.Dockerfile
+    volumes:
+      - .:/var/www
+    networks:
+      - shared
+
+  faq-bot-horizon:
+    container_name: faq-bot-horizon
+    build:
+      dockerfile: inf/horizon.Dockerfile
+    volumes:
+      - .:/var/www
+    entrypoint: php artisan horizon
+    networks:
+      - shared
+
+  faq-bot-db:
+    container_name: faq-bot-db
+    image: postgres:14.1-alpine
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/post-bot-db/data
+    ports:
+      - "5439:5432"
+    networks:
+      - shared
+
+  faq-bot-redis:
+    container_name: faq-bot-redis
+    restart: always
+    image: redis:latest
+    ports:
+      - "6378:6379"
+    networks:
+      - shared
+
+volumes:
+  pgdata:
+
+networks:
+  shared:
+    external: true

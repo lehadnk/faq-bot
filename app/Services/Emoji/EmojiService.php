@@ -7,7 +7,7 @@ use Discord\Discord;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 
-class EmojiFacade
+class EmojiService
 {
     public function loadEmojiList(Discord $discord, callable $onFinish)
     {

@@ -4,18 +4,18 @@ namespace App\Services\RevisionPublisher;
 
 use App\Models\Revision;
 use App\Services\Emoji\Dto\EmojiStorageDto;
-use App\Services\Emoji\EmojiFacade;
+use App\Services\Emoji\EmojiService;
 use App\Services\Glossary\Business\GlossaryPostProcessor;
 use App\Services\Glossary\Business\MessageUrlBuilder;
-use App\Services\QuestionPublisher\QuestionPublisherFacade;
+use App\Services\QuestionPublisher\QuestionPublisherService;
 use Discord\Discord;
 
-class RevisionPublisherFacade
+class RevisionPublisherService
 {
-    private QuestionPublisherFacade $questionPublisherFacade;
+    private QuestionPublisherService $questionPublisherFacade;
 
     public function __construct(
-        QuestionPublisherFacade $questionPublisherFacade,
+        QuestionPublisherService $questionPublisherFacade,
     ) {
         $this->questionPublisherFacade = $questionPublisherFacade;
     }
